@@ -1,0 +1,7 @@
+**.idea
+**.cmd
+target/
+**.mvn/
+**/src/main/**/target/
+**/src/test/**/target/
+**/mvnw
