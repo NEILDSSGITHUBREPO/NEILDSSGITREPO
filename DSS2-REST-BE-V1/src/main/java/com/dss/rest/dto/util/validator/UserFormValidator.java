@@ -45,4 +45,18 @@ public class UserFormValidator {
 
         return fieldMessage;
     }
+
+    public static Map<String, ValidationError> validateLoginForm(UserForm userForm) {
+        Map<String, ValidationError> fieldMessage = new HashMap<>();
+
+        if (userForm.getEmail() == null) {
+            fieldMessage.put("email", ValidationError.UNDEFINED_FIELD);
+        }
+
+        if (userForm.getPassword() == null) {
+            fieldMessage.put("password", ValidationError.UNDEFINED_FIELD);
+        }
+
+        return fieldMessage;
+    }
 }

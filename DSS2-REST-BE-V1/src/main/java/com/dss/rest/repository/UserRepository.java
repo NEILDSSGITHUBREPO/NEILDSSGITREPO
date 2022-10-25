@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -19,4 +20,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
             "WHERE u.userInformation.phoneNumber = :phoneNumber")
     Boolean phoneNumberExist(@Param("phoneNumber") String phoneNumber);
 
+    @Query("SELECT u FROM User u WHERE u.email = :q OR u.userInformation.phoneNumber = :q")
+    Optional<User> findByEmailOrPhoneNumber(@Param("q") String s);
 }
