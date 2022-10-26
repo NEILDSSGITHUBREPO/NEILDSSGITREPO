@@ -42,6 +42,10 @@ public class User {
         this.userInformation = userInformation;
     }
 
+    public User(UUID id) {
+        this.id = id;
+    }
+
     public UUID getId() {
         return id;
     }
