@@ -22,9 +22,9 @@ import java.util.Optional;
 public class AuthenticationService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     /**
      * Service method for registering user
