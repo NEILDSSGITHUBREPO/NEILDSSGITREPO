@@ -4,6 +4,12 @@ import com.dss.rest.dto.util.validator.ValidationError;
 
 import java.util.Map;
 
+/**
+ * Runtime exception for field validation exception
+ *
+ * Map<String, ValidationError> fieldsMessage contains the fields and types of error
+ *
+ * */
 public class FieldValidationException extends RuntimeException{
 
     private static final String MESSAGE = "Field Validation Exception";

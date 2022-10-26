@@ -5,6 +5,10 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.util.UUID;
 
+/**
+ * A User entity class to handle database to application data mapping.
+ * origin table : auths.user
+ */
 @Entity
 @Table(schema = "auths", name = "user")
 public class User {

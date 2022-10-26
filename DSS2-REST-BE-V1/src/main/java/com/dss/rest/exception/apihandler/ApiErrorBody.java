@@ -1,5 +1,10 @@
 package com.dss.rest.exception.apihandler;
 
+
+/**
+ * Api Error Message class that accepts Generic<B>
+ *     to create the fail message body
+ * */
 public class ApiErrorBody<B> {
 
     private String path;

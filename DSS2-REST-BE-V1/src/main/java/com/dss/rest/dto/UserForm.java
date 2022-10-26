@@ -2,7 +2,11 @@ package com.dss.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
+/**
+ * DTO to handle user-end REST consumption for User Entity
+ * Target Entity: User
+ *
+ * */
 public class UserForm {
     private String email;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

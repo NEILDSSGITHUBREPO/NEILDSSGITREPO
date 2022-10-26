@@ -7,8 +7,17 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * UserForm validator utility class
+ * */
 public class UserFormValidator {
 
+    /**
+     * Validates the UserForm for registration process
+     *
+     * @Params UserForm, boolean, boolean
+     * @Return Map<String, ValidationError>
+     * */
     public static Map<String, ValidationError> validateRegistrationForm(UserForm userForm, boolean emailExist, boolean phoneNumberExist) {
         Map<String, ValidationError> fieldMessage = new HashMap<>();
 
@@ -46,6 +55,13 @@ public class UserFormValidator {
         return fieldMessage;
     }
 
+
+    /**
+     * Validates the UserForm for login process
+     *
+     * @Params UserForm
+     * @Return Map<String, ValidationError>
+     * */
     public static Map<String, ValidationError> validateLoginForm(UserForm userForm) {
         Map<String, ValidationError> fieldMessage = new HashMap<>();
 

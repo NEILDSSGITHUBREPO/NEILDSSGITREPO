@@ -6,6 +6,10 @@ import javax.persistence.*;
 import java.util.UUID;
 
 
+/**
+ * A UserInformation entity class to handle database to application data mapping.
+ * origin table : auths.user_info
+ */
 @Entity
 @Table(schema = "auths", name = "user_info")
 public class UserInformation {

@@ -1,5 +1,8 @@
 package com.dss.rest.dto.util.validator;
 
+/**
+ * Validation Error Codes for DTO validation
+ */
 public enum ValidationError {
 
     SPECIAL_CHARACTER("VE01", "Special characters not allowed"),

@@ -16,6 +16,14 @@ import java.util.Map;
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
+    /**
+     *  Global Exception handler for all field validation exception
+     * @Params FieldValidationException, ServletWebRequest
+     * @Return ResponseEntity</?>
+     *
+     * Http Status = BAD_REQUEST
+     *
+     * */
     @ExceptionHandler(value = {FieldValidationException.class})
     public ResponseEntity<?> handleFieldValidationException(FieldValidationException fex, ServletWebRequest request) {
 
@@ -28,6 +36,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 , request);
     }
 
+    /**
+     *  Global Exception handler for all not found exception
+     * @Params FieldValidationException, ServletWebRequest
+     * @Return ResponseEntity</?>
+     *
+     * Http Status = NOT_FOUND
+     *
+     * */
     @ExceptionHandler(value = {UserNotFoundException.class})
     public ResponseEntity<?> handleNotFoundException(Exception ex, ServletWebRequest request) {
         return handleExceptionInternal(ex

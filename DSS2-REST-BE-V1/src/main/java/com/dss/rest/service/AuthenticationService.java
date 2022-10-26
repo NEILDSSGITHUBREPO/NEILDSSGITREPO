@@ -15,17 +15,28 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Service for handling authentication. Login and Registration
+ */
 @Service
 public class AuthenticationService {
 
     @Autowired
     UserRepository userRepository;
-
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    /**
+     * Service method for registering user
+     *
+     * @Param UserForm userForm
+     * @Return boolean ? true if success else
+     * @Throws FieldValidationException when fail
+     */
     public boolean registerUser(UserForm userForm) throws FieldValidationException {
-        Map<String, ValidationError> fieldMessage = UserFormValidator.validateRegistrationForm(userForm, userRepository.emailExist(userForm.getEmail()), userRepository.phoneNumberExist(userForm.getPhoneNumber()));
+        Map<String, ValidationError> fieldMessage = UserFormValidator.validateRegistrationForm(userForm
+                , userRepository.emailExist(userForm.getEmail())
+                , userRepository.phoneNumberExist(userForm.getPhoneNumber()));
 
         if (fieldMessage.size() > 0) {
             throw new FieldValidationException(fieldMessage);
@@ -38,6 +49,13 @@ public class AuthenticationService {
         return true;
     }
 
+    /**
+     * Service method for registering user
+     *
+     * @Param UserForm userForm
+     * @Return boolean ? true if success else false
+     * @Throws FieldValidationException when fail
+     */
     public boolean loginUser(UserForm userForm) throws FieldValidationException {
         Optional<User> optUser = userRepository.findByEmailOrPhoneNumber(userForm.getEmail());
         Map<String, ValidationError> fieldMessage = UserFormValidator.validateLoginForm(userForm);
