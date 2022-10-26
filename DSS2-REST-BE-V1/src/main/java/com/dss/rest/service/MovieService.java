@@ -14,7 +14,7 @@ import java.util.UUID;
 public class MovieService {
 
     @Autowired
-    MovieRepository movieRepository;
+    private MovieRepository movieRepository;
 
     public String createMovie(MovieForm movieForm, String id) {
         Movie movie = DTOTransformer.transformToMovie(movieForm);
