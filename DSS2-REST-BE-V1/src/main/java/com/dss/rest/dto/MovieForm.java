@@ -10,6 +10,26 @@ public class MovieForm {
     private String releaseDate;
     private String maturityRating;
 
+    private String coverPath;
+
+    private String trailerPath;
+
+    public String getCoverPath() {
+        return coverPath;
+    }
+
+    public void setCoverPath(String coverPath) {
+        this.coverPath = coverPath;
+    }
+
+    public String getTrailerPath() {
+        return trailerPath;
+    }
+
+    public void setTrailerPath(String trailerPath) {
+        this.trailerPath = trailerPath;
+    }
+
     public String getTitle() {
         return title;
     }

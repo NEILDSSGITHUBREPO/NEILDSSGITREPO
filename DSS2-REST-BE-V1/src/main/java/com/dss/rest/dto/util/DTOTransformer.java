@@ -43,6 +43,8 @@ public class DTOTransformer {
         Set<Category> categories = new HashSet<>();
 
         movieForm.getCategories().forEach(mfc -> categories.add(Category.valueOf(mfc.toUpperCase())));
+        movie.setImageLink(movieForm.getCoverPath());
+        movie.setTrailerLink(movieForm.getTrailerPath());
         movie.setCategories(categories);
         movie.setMaturityRating(MaturityRating.valueOf(movieForm.getMaturityRating()));
 

@@ -18,8 +18,6 @@ public class MovieService {
 
     public String createMovie(MovieForm movieForm, String id) {
         Movie movie = DTOTransformer.transformToMovie(movieForm);
-        movie.setImageLink("unset");
-        movie.setTrailerLink("unset");
         movie.setAddedBy(new User(UUID.fromString(id)));
 
         Movie savedMovie = movieRepository.save(movie);
