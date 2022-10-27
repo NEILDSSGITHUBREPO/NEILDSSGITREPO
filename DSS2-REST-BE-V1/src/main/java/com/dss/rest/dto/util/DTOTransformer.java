@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /*
  * Utility class to transform a DTO to Entity
@@ -49,5 +50,22 @@ public class DTOTransformer {
         movie.setMaturityRating(MaturityRating.valueOf(movieForm.getMaturityRating()));
 
         return movie;
+    }
+
+    public static MovieForm transformToMovieForm(Movie movie) {
+        MovieForm movieForm = new MovieForm();
+
+        movieForm.setId(movie.getId().toString());
+        movieForm.setBudget(movie.getBudget());
+        movieForm.setTitle(movie.getTitle());
+        movieForm.setCoverPath(movie.getImageLink());
+        movieForm.setTrailerPath(movie.getTrailerLink());
+        movieForm.setMaturityRating(movie.getMaturityRating().name());
+        movieForm.setReleaseDate(movie.getReleaseDate().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+
+        Set<String> categories = movie.getCategories().parallelStream().map(Enum::name).collect(Collectors.toSet());
+        movieForm.setCategories(categories);
+
+        return movieForm;
     }
 }

@@ -1,9 +1,13 @@
 package com.dss.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Set;
 
 public class MovieForm {
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String id;
     private String title;
     private Double budget;
     private Set<String> categories;
@@ -13,6 +17,14 @@ public class MovieForm {
     private String coverPath;
 
     private String trailerPath;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getCoverPath() {
         return coverPath;
