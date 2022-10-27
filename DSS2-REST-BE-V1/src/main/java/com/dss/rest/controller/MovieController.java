@@ -13,7 +13,12 @@ public class MovieController {
     private MovieService movieService;
 
     @PostMapping("/add")
-    public String addMovie(@RequestBody MovieForm movieForm, @RequestHeader("uid") String id){
+    public String addMovie(@RequestBody MovieForm movieForm, @RequestHeader("uid") String id) {
         return movieService.createMovie(movieForm, id);
+    }
+
+    @GetMapping("/view/{mvid}")
+    public MovieForm viewMovie(@PathVariable(name = "mvid") String mvid) {
+        return movieService.getMovieById(mvid);
     }
 }
