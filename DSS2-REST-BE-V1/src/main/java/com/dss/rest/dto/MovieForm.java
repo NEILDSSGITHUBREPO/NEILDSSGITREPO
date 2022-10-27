@@ -5,7 +5,7 @@ import java.util.Set;
 public class MovieForm {
 
     private String title;
-    private double budget;
+    private Double budget;
     private Set<String> categories;
     private String releaseDate;
     private String maturityRating;
@@ -38,11 +38,11 @@ public class MovieForm {
         this.title = title;
     }
 
-    public double getBudget() {
+    public Double getBudget() {
         return budget;
     }
 
-    public void setBudget(double budget) {
+    public void setBudget(Double budget) {
         this.budget = budget;
     }
 
