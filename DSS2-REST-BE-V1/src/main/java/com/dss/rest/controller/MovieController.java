@@ -26,7 +26,7 @@ public class MovieController {
     }
 
     @GetMapping("/view/all")
-    public PageResult<Set<MovieForm>> viewMovie(@RequestParam("pg") int page
+    public PageResult<Set<MovieForm>> viewAllMovie(@RequestParam("pg") int page
             , @RequestParam("sz") int size
             , @RequestParam(value = "sf", required = false) String sortField
             , @RequestParam(value = "sd", required = false) String sortDirection) {
