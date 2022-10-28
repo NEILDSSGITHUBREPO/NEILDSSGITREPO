@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * */
 public class ReviewForm{
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String id;
 
     private String description;
