@@ -47,11 +47,17 @@ public class Movie {
     @Enumerated(EnumType.STRING)
     private Set<Category> categories;
 
+    @OneToMany(mappedBy = "reviewedMovie")
+    private Set<Review> reviews;
     @ManyToOne
     @JoinColumn(name = "added_by")
     private User addedBy;
 
     public Movie() {
+    }
+
+    public Movie(UUID id) {
+        this.id = id;
     }
 
     public Movie(String title, double budget, LocalDate releaseDate) {
@@ -138,5 +144,13 @@ public class Movie {
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
+    }
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
     }
 }

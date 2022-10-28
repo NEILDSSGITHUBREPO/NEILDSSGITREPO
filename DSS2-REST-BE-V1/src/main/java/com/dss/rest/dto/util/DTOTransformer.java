@@ -1,7 +1,9 @@
 package com.dss.rest.dto.util;
 
 import com.dss.rest.dto.MovieForm;
+import com.dss.rest.dto.ReviewForm;
 import com.dss.rest.dto.UserForm;
+import com.dss.rest.entity.Review;
 import com.dss.rest.entity.User;
 import com.dss.rest.entity.UserInformation;
 import com.dss.rest.entity.types.Category;
@@ -36,9 +38,9 @@ public class DTOTransformer {
     /**
      * Transforms MovieForm to Movie
      *
-     * @Paran MovieForm
+     * @Param MovieForm
      * @Return Movie
-     * */
+     */
     public static Movie transformToMovie(MovieForm movieForm) {
         Movie movie;
 
@@ -62,9 +64,9 @@ public class DTOTransformer {
     /**
      * Transforms Movie to MovieForm
      *
-     * @Paran Movie
+     * @Param Movie
      * @Return MovieForm
-     * */
+     */
     public static MovieForm transformToMovieForm(Movie movie) {
         MovieForm movieForm = new MovieForm();
 
@@ -80,5 +82,20 @@ public class DTOTransformer {
         movieForm.setCategories(categories);
 
         return movieForm;
+    }
+
+    /**
+     * Transforms ReviewForm to Review
+     *
+     * @Param ReviewForm
+     * @Return Review
+     */
+    public static Review transformToReview(ReviewForm reviewForm) {
+        Review review = new Review();
+
+        review.setDescription(reviewForm.getDescription());
+        review.setRating(reviewForm.getRating());
+
+        return review;
     }
 }
