@@ -32,4 +32,10 @@ public class MovieController {
             , @RequestParam(value = "sd", required = false) String sortDirection) {
         return movieService.getAllMovies(page, size, sortField, sortDirection);
     }
+
+    @PutMapping("update/{mvid}")
+    public boolean updateMovie(@PathVariable(name = "mvid") String mvid, @RequestBody MovieForm movieForm) {
+        return movieService.updateMovie(mvid, movieForm);
+    }
+
 }

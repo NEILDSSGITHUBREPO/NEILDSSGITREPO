@@ -41,4 +41,30 @@ public class MovieFormValidator {
 
         return fieldMessage;
     }
+
+    public static Map<String, ValidationError> validateMovieFormUpdate(MovieForm movieForm) {
+        Map<String, ValidationError> fieldMessage = new HashMap<>();
+
+        if (movieForm.getReleaseDate() != null) {
+            fieldMessage.put("releaseDate", ValidationError.UNSSUPORTED_FIELD);
+        }
+
+        if (movieForm.getTitle() != null) {
+            fieldMessage.put("title", ValidationError.UNSSUPORTED_FIELD);
+        }
+
+        if (movieForm.getCategories() != null) {
+            fieldMessage.put("categories", ValidationError.UNSSUPORTED_FIELD);
+        }
+
+        if (movieForm.getMaturityRating() != null) {
+            fieldMessage.put("maturityRating", ValidationError.UNSSUPORTED_FIELD);
+        }
+
+        if (movieForm.getTrailerPath() != null) {
+            fieldMessage.put("trailerPath", ValidationError.UNSSUPORTED_FIELD);
+        }
+
+        return fieldMessage;
+    }
 }

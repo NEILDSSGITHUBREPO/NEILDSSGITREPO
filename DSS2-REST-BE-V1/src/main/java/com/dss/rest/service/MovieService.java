@@ -13,7 +13,6 @@ import com.dss.rest.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -61,7 +60,6 @@ public class MovieService {
         return movieForm.get();
     }
 
-
     public PageResult<Set<MovieForm>> getAllMovies(int page, int size, String sortField, String sortDirection) {
         Page moviePage = null;
 
@@ -93,4 +91,32 @@ public class MovieService {
 
         return new PageResult<>(page, moviePage.getTotalPages(), movieForms.size(), movieForms);
     }
+
+    public boolean updateMovie(String mvid, MovieForm movieForm) {
+        Map<String, ValidationError> fieldMessage = MovieFormValidator.validateMovieFormUpdate(movieForm);
+        boolean successUpdate;
+
+        try {
+            if (fieldMessage.size() > 0) {
+                throw new FieldValidationException(fieldMessage);
+            } else {
+                Optional<Movie> optMovie = movieRepository.findById(UUID.fromString(mvid));
+                if(optMovie.isPresent()){
+                    Movie movie = optMovie.get();
+                    movie.setBudget(Optional.ofNullable(movieForm.getBudget()).orElse(movie.getBudget()));
+                    movie.setImageLink(Optional.ofNullable(movieForm.getCoverPath()).orElse(movie.getImageLink()));
+                    movieRepository.save(movie);
+                    successUpdate = true;
+                }else{
+                    throw new MovieNotFoundException();
+                }
+            }
+        } catch (IllegalArgumentException iae) {
+            fieldMessage.put("mvid", ValidationError.FORMAT_MISMATCH);
+            throw new FieldValidationException(fieldMessage);
+        }
+
+        return successUpdate;
+    }
+
 }

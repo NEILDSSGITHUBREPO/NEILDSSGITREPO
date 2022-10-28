@@ -9,8 +9,8 @@ public enum ValidationError {
     DUPLICATE_DATA("VE02", "Already in use"),
     FORMAT_MISMATCH("VE03", "Invalid Format"),
     UNDEFINED_FIELD("VE04", "Undefined Value"),
-
-    UNSSUPORTED_RANGE("VE05", "Unsupported Range");
+    UNSSUPORTED_RANGE("VE05", "Unsupported Range"),
+    UNSSUPORTED_FIELD("VEO6", "Unsupported field");
     private final String code;
     private final String description;
 
