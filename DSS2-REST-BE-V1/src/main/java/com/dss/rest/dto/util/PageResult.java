@@ -1,4 +1,4 @@
-package com.dss.rest.dto;
+package com.dss.rest.dto.util;
 
 import java.util.Collection;
 

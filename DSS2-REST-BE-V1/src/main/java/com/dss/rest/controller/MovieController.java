@@ -1,7 +1,7 @@
 package com.dss.rest.controller;
 
 import com.dss.rest.dto.MovieForm;
-import com.dss.rest.dto.PageResult;
+import com.dss.rest.dto.util.PageResult;
 import com.dss.rest.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

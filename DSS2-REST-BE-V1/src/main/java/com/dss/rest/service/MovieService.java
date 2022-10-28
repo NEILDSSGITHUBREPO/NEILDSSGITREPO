@@ -1,7 +1,7 @@
 package com.dss.rest.service;
 
 import com.dss.rest.dto.MovieForm;
-import com.dss.rest.dto.PageResult;
+import com.dss.rest.dto.util.PageResult;
 import com.dss.rest.dto.util.DTOTransformer;
 import com.dss.rest.dto.util.validator.MovieFormValidator;
 import com.dss.rest.dto.util.validator.ValidationError;
