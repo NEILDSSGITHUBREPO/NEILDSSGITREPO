@@ -12,6 +12,9 @@ import java.nio.file.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Service for handling file upload
+ * */
 @Service
 public class FileResourceService {
 
@@ -20,6 +23,12 @@ public class FileResourceService {
 
     @Value("${app.file.upload.location}")
     private String uploadLocation;
+
+    /**
+     * Service method for saving file
+     * @Param MultipartFile
+     * @Returns String(path location)
+     * */
     public String saveFile(MultipartFile multipartFile) {
         String filePath = String.format("%s/%s.%s", uploadLocation
                 , LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd_MM_yyyy_HH_mm_ss_SS"))
@@ -35,7 +44,4 @@ public class FileResourceService {
         return uploadPath.toString();
     }
 
-    public byte[] getFile(String path) {
-        return new byte[12312];
-    }
 }
