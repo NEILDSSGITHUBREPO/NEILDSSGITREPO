@@ -13,6 +13,12 @@ import java.util.Map;
  */
 public class MovieFormValidator {
 
+    /**
+     * Validates the MovieForm for creating new Movie
+     *
+     * @Params MovieForm
+     * @Return Map<String, ValidationError>
+     * */
     public static Map<String, ValidationError> validateMovieForm(MovieForm movieForm) {
         Map<String, ValidationError> fieldMessage = new HashMap<>();
 
@@ -42,6 +48,12 @@ public class MovieFormValidator {
         return fieldMessage;
     }
 
+    /**
+     * Validates the MovieForm for updating movie
+     *
+     * @Params MovieForm
+     * @Return Map<String, ValidationError>
+     * */
     public static Map<String, ValidationError> validateMovieFormUpdate(MovieForm movieForm) {
         Map<String, ValidationError> fieldMessage = new HashMap<>();
 

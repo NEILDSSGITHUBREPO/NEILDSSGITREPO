@@ -33,6 +33,12 @@ public class DTOTransformer {
         return user;
     }
 
+    /**
+     * Transforms MovieForm to Movie
+     *
+     * @Paran MovieForm
+     * @Return Movie
+     * */
     public static Movie transformToMovie(MovieForm movieForm) {
         Movie movie;
 
@@ -52,6 +58,13 @@ public class DTOTransformer {
         return movie;
     }
 
+
+    /**
+     * Transforms Movie to MovieForm
+     *
+     * @Paran Movie
+     * @Return MovieForm
+     * */
     public static MovieForm transformToMovieForm(Movie movie) {
         MovieForm movieForm = new MovieForm();
 
