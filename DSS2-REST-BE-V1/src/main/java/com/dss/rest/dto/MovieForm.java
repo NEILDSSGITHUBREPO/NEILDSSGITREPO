@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Set;
 
+/**
+ * DTO to handle user-end REST consumption for Movie Entity
+ * Target Entity: Movie
+ * */
 public class MovieForm {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
