@@ -44,6 +44,7 @@ public class Movie {
     @ElementCollection(targetClass = Category.class)
     @CollectionTable(schema = "movs", name = "movie_category", joinColumns = @JoinColumn(name = "mvid"))
     @Column(name = "category")
+    @Enumerated(EnumType.STRING)
     private Set<Category> categories;
 
     @ManyToOne
