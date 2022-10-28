@@ -1,13 +1,11 @@
 package com.dss.rest.dto.util;
 
+import com.dss.rest.dto.ActorForm;
 import com.dss.rest.dto.MovieForm;
 import com.dss.rest.dto.ReviewForm;
 import com.dss.rest.dto.UserForm;
-import com.dss.rest.entity.Review;
-import com.dss.rest.entity.User;
-import com.dss.rest.entity.UserInformation;
+import com.dss.rest.entity.*;
 import com.dss.rest.entity.types.Category;
-import com.dss.rest.entity.Movie;
 import com.dss.rest.entity.types.MaturityRating;
 
 import java.time.LocalDate;
@@ -113,5 +111,21 @@ public class DTOTransformer {
         reviewForm.setRating(review.getRating());
 
         return reviewForm;
+    }
+
+    /**
+     * Transforms ActorForm to Actor
+     * @Param ActorReview
+     * @Return Actor
+     * */
+    public static Actor transformToActor(ActorForm actorForm){
+        Actor actor = new Actor();
+
+        actor.setFirstName(actorForm.getFirstName());
+        actor.setLastName(actorForm.getLastName());
+        actor.setGender(actorForm.getGender());
+        actor.setAge(actorForm.getAge());
+
+        return actor;
     }
 }

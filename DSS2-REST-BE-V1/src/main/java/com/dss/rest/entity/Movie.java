@@ -53,6 +53,13 @@ public class Movie {
     @JoinColumn(name = "added_by")
     private User addedBy;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(schema = "actors"
+            , name = "actor_movie"
+            , joinColumns = @JoinColumn(name = "mvid")
+            , inverseJoinColumns = @JoinColumn(name = "acid"))
+    private Set<Actor> actors;
+
     public Movie() {
     }
 
