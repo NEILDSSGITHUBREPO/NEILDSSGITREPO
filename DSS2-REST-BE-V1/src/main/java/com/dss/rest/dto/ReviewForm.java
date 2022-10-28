@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * DTO to handle user-end REST consumption for Review Entity
- * Target Entity: User
+ * Target Entity: Review
  *
  * */
 public class ReviewForm{
