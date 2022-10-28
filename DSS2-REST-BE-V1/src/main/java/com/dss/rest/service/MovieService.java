@@ -22,12 +22,20 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
+/**
+ * Service class for movies
+ * */
 @Service
 public class MovieService {
 
     @Autowired
     private MovieRepository movieRepository;
 
+    /**
+     * Service method for creating a movie
+     * @Param MovieForm, String
+     * @Returns  String(movieId)
+     * */
     public String createMovie(MovieForm movieForm, String id) {
         Map<String, ValidationError> fieldMessage = MovieFormValidator.validateMovieForm(movieForm);
         String movieId;
@@ -45,6 +53,11 @@ public class MovieService {
         return movieId;
     }
 
+    /**
+     * Service method for getting a specific movie
+     * @Param String
+     * @Returns  MovieForm
+     * */
     public MovieForm getMovieById(String mvid) {
         AtomicReference<MovieForm> movieForm = new AtomicReference<>(new MovieForm());
 
@@ -62,6 +75,11 @@ public class MovieService {
         return movieForm.get();
     }
 
+    /**
+     * Service method for getting all movie in pages
+     * @Param int, int, String, String
+     * @Returns  PageResult<Set<MovieForm>>
+     * */
     public PageResult<Set<MovieForm>> getAllMovies(int page, int size, String sortField, String sortDirection) {
         Page moviePage = null;
 
@@ -94,6 +112,11 @@ public class MovieService {
         return new PageResult<>(page, moviePage.getTotalPages(), movieForms.size(), movieForms);
     }
 
+    /**
+     * Service method for updating movie
+     * @Param String, MovieForm
+     * @Returns  boolean; true if success
+     * */
     public boolean updateMovie(String mvid, MovieForm movieForm) {
         Map<String, ValidationError> fieldMessage = MovieFormValidator.validateMovieFormUpdate(movieForm);
         boolean successUpdate;
@@ -121,6 +144,11 @@ public class MovieService {
         return successUpdate;
     }
 
+    /**
+     * Service method for deleting movie
+     * @Param String
+     * @Returns  boolean; true if success
+     * */
     public boolean deleteMovie(String mvid) {
         Map<String, ValidationError> fieldMessage = new HashMap<>();
         boolean successDelete = false;
