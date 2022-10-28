@@ -38,4 +38,8 @@ public class MovieController {
         return movieService.updateMovie(mvid, movieForm);
     }
 
+    @DeleteMapping("delete")
+    public boolean updateMovie(@RequestParam(name = "mvid") String mvid) {
+        return movieService.deleteMovie(mvid);
+    }
 }

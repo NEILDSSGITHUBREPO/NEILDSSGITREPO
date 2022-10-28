@@ -16,6 +16,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -119,4 +121,28 @@ public class MovieService {
         return successUpdate;
     }
 
+    public boolean deleteMovie(String mvid) {
+        Map<String, ValidationError> fieldMessage = new HashMap<>();
+        boolean successDelete = false;
+
+        try {
+            Optional<Movie> optMovie = movieRepository.findById(UUID.fromString(mvid));
+            if(optMovie.isPresent()){
+                Movie movie = optMovie.get();
+                if((Duration.between(movie.getReleaseDate(), LocalDate.now()).getSeconds() / 31536000) >= 1){
+                    successDelete = true;
+                    movieRepository.delete(movie);
+                }else{
+                    fieldMessage.put("releaseDate", ValidationError.UNSSUPORTED_RANGE);
+                }
+            }else{
+                throw new MovieNotFoundException();
+            }
+        } catch (IllegalArgumentException iae) {
+            fieldMessage.put("mvid", ValidationError.FORMAT_MISMATCH);
+            throw new FieldValidationException(fieldMessage);
+        }
+
+        return successDelete;
+    }
 }
