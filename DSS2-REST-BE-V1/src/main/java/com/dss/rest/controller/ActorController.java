@@ -24,4 +24,15 @@ public class ActorController {
     public String addActor(@RequestBody ActorForm actorForm){
         return actorService.addActor(actorForm);
     }
+
+    /**
+     * Controller method to view a specific Actor
+     * @Param String(actorId)
+     * @Return ActorForm
+     * */
+    @GetMapping("view/{acid}")
+    public ActorForm viewActor(@PathVariable(name = "acid") String acid){
+        return actorService.getActor(acid);
+    }
+
 }

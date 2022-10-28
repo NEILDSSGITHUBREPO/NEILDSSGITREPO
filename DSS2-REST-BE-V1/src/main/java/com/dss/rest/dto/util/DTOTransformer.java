@@ -128,4 +128,19 @@ public class DTOTransformer {
 
         return actor;
     }
+
+    /**
+     * Transforms Actor to ActorForm
+     * */
+    public static ActorForm transformToActorForm(Actor actor){
+        ActorForm actorForm = new ActorForm();
+
+        actorForm.setId(actor.getId().toString());
+        actorForm.setFirstName(actor.getFirstName());
+        actorForm.setLastName(actor.getLastName());
+        actorForm.setGender(actor.getGender());
+        actorForm.setAge(actor.getAge());
+
+        return actorForm;
+    }
 }
