@@ -7,6 +7,7 @@ import com.dss.rest.dto.util.validator.ActorFormValidator;
 import com.dss.rest.dto.util.validator.ValidationError;
 import com.dss.rest.entity.Actor;
 import com.dss.rest.exception.ActorNotFoundException;
+import com.dss.rest.exception.DataEntanglementException;
 import com.dss.rest.exception.FieldValidationException;
 import com.dss.rest.repository.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -136,5 +139,30 @@ public class ActorService {
                 .collect(Collectors.toSet());
 
         return new PageResult<>(page, actorPage.getTotalPages(), actorForms.size(), actorForms);
+    }
+
+    public boolean deleteActor(String acid) {
+        Map<String, ValidationError> fieldMessage = new HashMap<>();
+        boolean successDelete = false;
+
+        try {
+            Optional<Actor> optActor = actorRepository.findById(UUID.fromString(acid));
+            if(optActor.isPresent()){
+                Actor actor = optActor.get();
+                if(actor.getMovies().size() <= 0){
+                    actorRepository.delete(actor);
+                    successDelete = true;
+                }else{
+                    throw new DataEntanglementException("Can't DELETE Actor. Reason: Actor have assigned movies");
+                }
+            }else{
+                throw new ActorNotFoundException();
+            }
+        } catch (IllegalArgumentException iae) {
+            fieldMessage.put("acid", ValidationError.FORMAT_MISMATCH);
+            throw new FieldValidationException(fieldMessage);
+        }
+
+        return successDelete;
     }
 }

@@ -1,5 +1,6 @@
 package com.dss.rest.exception.apihandler;
 
+import com.dss.rest.exception.DataEntanglementException;
 import com.dss.rest.exception.FieldValidationException;
 import com.dss.rest.dto.util.validator.ValidationError;
 import com.dss.rest.exception.MovieNotFoundException;
@@ -18,13 +19,13 @@ import java.util.Map;
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     /**
-     *  Global Exception handler for all field validation exception
+     * Global Exception handler for all field validation exception
+     *
      * @Params FieldValidationException, ServletWebRequest
-     * @Return ResponseEntity</?>
-     *
+     * @Return ResponseEntity</ ?>
+     * <p>
      * Http Status = BAD_REQUEST
-     *
-     * */
+     */
     @ExceptionHandler(value = {FieldValidationException.class})
     public ResponseEntity<?> handleFieldValidationException(FieldValidationException fex, ServletWebRequest request) {
 
@@ -38,13 +39,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     *  Global Exception handler for all not found exception
-     * @Params FieldValidationException, ServletWebRequest
-     * @Return ResponseEntity</?>
+     * Global Exception handler for all not found exception
      *
+     * @Params Exception, ServletWebRequest
+     * @Return ResponseEntity</ ?>
+     * <p>
      * Http Status = NOT_FOUND
-     *
-     * */
+     */
     @ExceptionHandler(value = {UserNotFoundException.class, MovieNotFoundException.class})
     public ResponseEntity<?> handleNotFoundException(Exception ex, ServletWebRequest request) {
         return handleExceptionInternal(ex
@@ -53,6 +54,25 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                         , ex.getMessage())
                 , new HttpHeaders()
                 , HttpStatus.NOT_FOUND
+                , request);
+    }
+
+    /**
+     * Global Exception handler for all data dependency exception
+     *
+     * @Params Exception, ServletWebRequest
+     * @Return ResponseEntity</ ?>
+     * <p>
+     * Http Status = FAILED_DEPENDENCY
+     */
+    @ExceptionHandler(value = {DataEntanglementException.class})
+    public ResponseEntity<?> handleDataDependencyException(Exception ex, ServletWebRequest request) {
+        return handleExceptionInternal(ex
+                , new ApiErrorBody<>(request.getRequest().getRequestURI()
+                        , HttpStatus.FAILED_DEPENDENCY.toString()
+                        , ex.getMessage())
+                , new HttpHeaders()
+                , HttpStatus.FAILED_DEPENDENCY
                 , request);
     }
 }

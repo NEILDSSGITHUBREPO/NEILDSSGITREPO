@@ -56,4 +56,9 @@ public class ActorController {
             , @RequestParam(value = "sd", required = false) String sortDirection) {
         return actorService.getAllActorOfMovie(mvid, page, size, sortField, sortDirection);
     }
+
+    @DeleteMapping("delete")
+    public boolean deleteActor(@RequestParam("acid") String acid){
+        return actorService.deleteActor(acid);
+    }
 }
