@@ -1,13 +1,11 @@
 package com.dss.rest.service;
 
 import com.dss.rest.dto.ActorForm;
-import com.dss.rest.dto.MovieForm;
 import com.dss.rest.dto.util.DTOTransformer;
 import com.dss.rest.dto.util.PageResult;
 import com.dss.rest.dto.util.validator.ActorFormValidator;
 import com.dss.rest.dto.util.validator.ValidationError;
 import com.dss.rest.entity.Actor;
-import com.dss.rest.entity.Movie;
 import com.dss.rest.exception.ActorNotFoundException;
 import com.dss.rest.exception.FieldValidationException;
 import com.dss.rest.repository.ActorRepository;
@@ -52,9 +50,10 @@ public class ActorService {
 
     /**
      * Get specific actor
+     *
      * @Param String acid(actor ID)
      * @Return ActorForm
-     * */
+     */
     public ActorForm getActor(String acid) {
         try {
             Optional<Actor> optActor = actorRepository.findById(UUID.fromString(acid));
@@ -74,9 +73,10 @@ public class ActorService {
 
     /**
      * Service method for getting all Actors in pages
+     *
      * @Param int, int, String, String
-     * @Returns  PageResult<Set<ActorForm>>
-     * */
+     * @Returns PageResult<Set < ActorForm>>
+     */
     public PageResult<Set<ActorForm>> getAllActor(int page, int size, String sortField, String sortDirection) {
         Page actorPage = null;
 
@@ -91,6 +91,37 @@ public class ActorService {
             throw new FieldValidationException(fieldMessage);
         } else {
             actorPage = actorRepository.findAll(PageRequest.of(page - 1, size)
+                    .withSort(Sort.by(Sort.Direction.fromString(sortDirection), sortField)));
+
+            if (actorPage.getTotalPages() < page) {
+                fieldMessage.put("page", ValidationError.UNSSUPORTED_RANGE);
+                throw new FieldValidationException(fieldMessage);
+            }
+        }
+
+        List<Actor> actors = actorPage.getContent();
+        Set<ActorForm> actorForms = actors.parallelStream()
+                .map(DTOTransformer::transformToActorForm)
+                .collect(Collectors.toSet());
+
+        return new PageResult<>(page, actorPage.getTotalPages(), actorForms.size(), actorForms);
+    }
+
+    public PageResult<Set<ActorForm>> getAllActorOfMovie(String mvid, int page, int size
+            , String sortField, String sortDirection) {
+        Page actorPage = null;
+
+        Map<String, ValidationError> fieldMessage = new HashMap<>();
+        if (sortDirection == null || sortDirection.isEmpty()) sortDirection = "ASC";
+        if (sortField == null || sortField.isEmpty()) sortField = "id";
+
+        if (page <= 0) fieldMessage.put("page", ValidationError.UNSSUPORTED_RANGE);
+        if (size <= 0) fieldMessage.put("size", ValidationError.UNSSUPORTED_RANGE);
+
+        if (fieldMessage.size() > 0) {
+            throw new FieldValidationException(fieldMessage);
+        } else {
+            actorPage = actorRepository.findAllByMoviesId(UUID.fromString(mvid), PageRequest.of(page - 1, size)
                     .withSort(Sort.by(Sort.Direction.fromString(sortDirection), sortField)));
 
             if (actorPage.getTotalPages() < page) {

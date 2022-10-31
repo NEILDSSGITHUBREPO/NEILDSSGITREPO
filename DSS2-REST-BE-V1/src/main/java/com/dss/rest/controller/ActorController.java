@@ -2,7 +2,6 @@ package com.dss.rest.controller;
 
 import com.dss.rest.dto.ActorForm;
 import com.dss.rest.dto.util.PageResult;
-import com.dss.rest.entity.Actor;
 import com.dss.rest.service.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -47,5 +46,14 @@ public class ActorController {
             , @RequestParam(value = "sf", required = false) String sortField
             , @RequestParam(value = "sd", required = false) String sortDirection) {
         return actorService.getAllActor(page, size, sortField, sortDirection);
+    }
+
+    @GetMapping("view")
+    public PageResult<Set<ActorForm>> viewAllActorOfMovie(@RequestParam("mvid") String mvid
+            , @RequestParam("pg") int page
+            , @RequestParam("sz") int size
+            , @RequestParam(value = "sf", required = false) String sortField
+            , @RequestParam(value = "sd", required = false) String sortDirection) {
+        return actorService.getAllActorOfMovie(mvid, page, size, sortField, sortDirection);
     }
 }
