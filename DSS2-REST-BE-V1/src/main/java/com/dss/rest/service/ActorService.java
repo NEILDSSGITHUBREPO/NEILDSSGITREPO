@@ -9,6 +9,7 @@ import com.dss.rest.entity.Actor;
 import com.dss.rest.exception.ActorNotFoundException;
 import com.dss.rest.exception.DataEntanglementException;
 import com.dss.rest.exception.FieldValidationException;
+import com.dss.rest.exception.MovieNotFoundException;
 import com.dss.rest.repository.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,8 +17,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -147,15 +146,15 @@ public class ActorService {
 
         try {
             Optional<Actor> optActor = actorRepository.findById(UUID.fromString(acid));
-            if(optActor.isPresent()){
+            if (optActor.isPresent()) {
                 Actor actor = optActor.get();
-                if(actor.getMovies().size() <= 0){
+                if (actor.getMovies().size() <= 0) {
                     actorRepository.delete(actor);
                     successDelete = true;
-                }else{
+                } else {
                     throw new DataEntanglementException("Can't DELETE Actor. Reason: Actor have assigned movies");
                 }
-            }else{
+            } else {
                 throw new ActorNotFoundException();
             }
         } catch (IllegalArgumentException iae) {
@@ -164,5 +163,34 @@ public class ActorService {
         }
 
         return successDelete;
+    }
+
+    public boolean updateActor(String acid, ActorForm actorForm) {
+        Map<String, ValidationError> fieldMessage = new HashMap<>();
+        boolean successUpdate;
+
+        try {
+            if (fieldMessage.size() > 0) {
+                throw new FieldValidationException(fieldMessage);
+            } else {
+                Optional<Actor> optActor = actorRepository.findById(UUID.fromString(acid));
+                if (optActor.isPresent()) {
+                    Actor actor = optActor.get();
+                    actor.setFirstName(Optional.ofNullable(actorForm.getFirstName()).orElse(actor.getFirstName()));
+                    actor.setLastName(Optional.ofNullable(actorForm.getLastName()).orElse(actor.getLastName()));
+                    actor.setAge(Optional.ofNullable(actorForm.getAge()).orElse(actor.getAge()));
+                    actor.setGender(Optional.ofNullable(actorForm.getGender()).orElse(actor.getGender()));
+                    actorRepository.save(actor);
+                    successUpdate = true;
+                } else {
+                    throw new ActorNotFoundException();
+                }
+            }
+        } catch (IllegalArgumentException iae) {
+            fieldMessage.put("acid", ValidationError.FORMAT_MISMATCH);
+            throw new FieldValidationException(fieldMessage);
+        }
+
+        return successUpdate;
     }
 }
