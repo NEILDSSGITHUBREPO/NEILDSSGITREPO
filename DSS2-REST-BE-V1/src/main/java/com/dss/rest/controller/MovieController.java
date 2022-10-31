@@ -67,7 +67,7 @@ public class MovieController {
      * @Return boolean; true if success
      * */
     @DeleteMapping("delete")
-    public boolean updateMovie(@RequestParam(name = "mvid") String mvid) {
+    public boolean deleteMovie(@RequestParam(name = "mvid") String mvid) {
         return movieService.deleteMovie(mvid);
     }
 }
