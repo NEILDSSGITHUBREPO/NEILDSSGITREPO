@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /*
@@ -42,10 +43,7 @@ public class DTOTransformer {
     public static Movie transformToMovie(MovieForm movieForm) {
         Movie movie;
 
-        movie = new Movie(movieForm.getTitle()
-                , movieForm.getBudget()
-                , LocalDate.parse(movieForm.getReleaseDate()
-                , DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+        movie = new Movie(movieForm.getTitle(), movieForm.getBudget(), LocalDate.parse(movieForm.getReleaseDate(), DateTimeFormatter.ofPattern("MM/dd/yyyy")));
 
         Set<Category> categories = new HashSet<>();
 
@@ -53,6 +51,10 @@ public class DTOTransformer {
         movie.setImageLink(movieForm.getCoverPath());
         movie.setTrailerLink(movieForm.getTrailerPath());
         movie.setCategories(categories);
+        movie.setActors(movieForm.getActors()
+                .parallelStream()
+                .map(actorForm -> transformToActor(actorForm))
+                .collect(Collectors.toSet()));
         movie.setMaturityRating(MaturityRating.valueOf(movieForm.getMaturityRating()));
 
         return movie;
@@ -78,6 +80,11 @@ public class DTOTransformer {
 
         Set<String> categories = movie.getCategories().parallelStream().map(Enum::name).collect(Collectors.toSet());
         movieForm.setCategories(categories);
+
+        movieForm.setActors(movie.getActors()
+                .parallelStream()
+                .map(actor -> transformToActorForm(actor))
+                .collect(Collectors.toSet()));
 
         return movieForm;
     }
@@ -115,24 +122,29 @@ public class DTOTransformer {
 
     /**
      * Transforms ActorForm to Actor
+     *
      * @Param ActorReview
      * @Return Actor
-     * */
-    public static Actor transformToActor(ActorForm actorForm){
+     */
+    public static Actor transformToActor(ActorForm actorForm) {
         Actor actor = new Actor();
 
-        actor.setFirstName(actorForm.getFirstName());
-        actor.setLastName(actorForm.getLastName());
-        actor.setGender(actorForm.getGender());
-        actor.setAge(actorForm.getAge());
+        if(actorForm.getId() != null) {
+            actor.setId(UUID.fromString(actorForm.getId()));
+        }else {
+            actor.setFirstName(actorForm.getFirstName());
+            actor.setLastName(actorForm.getLastName());
+            actor.setGender(actorForm.getGender());
+            actor.setAge(actorForm.getAge());
+        }
 
         return actor;
     }
 
     /**
      * Transforms Actor to ActorForm
-     * */
-    public static ActorForm transformToActorForm(Actor actor){
+     */
+    public static ActorForm transformToActorForm(Actor actor) {
         ActorForm actorForm = new ActorForm();
 
         actorForm.setId(actor.getId().toString());

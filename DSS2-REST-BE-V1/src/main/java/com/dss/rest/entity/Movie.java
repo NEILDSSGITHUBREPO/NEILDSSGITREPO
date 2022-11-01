@@ -160,4 +160,12 @@ public class Movie {
     public void setReviews(Set<Review> reviews) {
         this.reviews = reviews;
     }
+
+    public Set<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(Set<Actor> actors) {
+        this.actors = actors;
+    }
 }

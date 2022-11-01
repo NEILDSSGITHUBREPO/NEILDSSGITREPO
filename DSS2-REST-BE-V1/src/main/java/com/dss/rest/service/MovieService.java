@@ -63,7 +63,13 @@ public class MovieService {
 
         try {
             Optional<Movie> optMovie = movieRepository.findById(UUID.fromString(mvid));
-            optMovie.ifPresent(movie -> movieForm.set(DTOTransformer.transformToMovieForm(movie)));
+            if (optMovie.isPresent()) {
+                Movie movie = optMovie.get();
+                movieForm.set(DTOTransformer.transformToMovieForm(movie));
+            } else {
+                throw new MovieNotFoundException();
+            }
+
         } catch (IllegalArgumentException iae) {
             Map<String, ValidationError> fieldMessage = new HashMap<>();
             fieldMessage.put("mvid", ValidationError.FORMAT_MISMATCH);
@@ -126,13 +132,13 @@ public class MovieService {
                 throw new FieldValidationException(fieldMessage);
             } else {
                 Optional<Movie> optMovie = movieRepository.findById(UUID.fromString(mvid));
-                if(optMovie.isPresent()){
+                if (optMovie.isPresent()) {
                     Movie movie = optMovie.get();
                     movie.setBudget(Optional.ofNullable(movieForm.getBudget()).orElse(movie.getBudget()));
                     movie.setImageLink(Optional.ofNullable(movieForm.getCoverPath()).orElse(movie.getImageLink()));
                     movieRepository.save(movie);
                     successUpdate = true;
-                }else{
+                } else {
                     throw new MovieNotFoundException();
                 }
             }
@@ -155,15 +161,15 @@ public class MovieService {
 
         try {
             Optional<Movie> optMovie = movieRepository.findById(UUID.fromString(mvid));
-            if(optMovie.isPresent()){
+            if (optMovie.isPresent()) {
                 Movie movie = optMovie.get();
-                if((Duration.between(movie.getReleaseDate(), LocalDate.now()).getSeconds() / 31536000) >= 1){
+                if ((Duration.between(movie.getReleaseDate(), LocalDate.now()).getSeconds() / 31536000) >= 1) {
                     successDelete = true;
                     movieRepository.delete(movie);
-                }else{
+                } else {
                     fieldMessage.put("releaseDate", ValidationError.UNSSUPORTED_RANGE);
                 }
-            }else{
+            } else {
                 throw new MovieNotFoundException();
             }
         } catch (IllegalArgumentException iae) {

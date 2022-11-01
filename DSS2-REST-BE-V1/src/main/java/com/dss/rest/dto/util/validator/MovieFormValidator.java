@@ -18,7 +18,7 @@ public class MovieFormValidator {
      *
      * @Params MovieForm
      * @Return Map<String, ValidationError>
-     * */
+     */
     public static Map<String, ValidationError> validateMovieForm(MovieForm movieForm) {
         Map<String, ValidationError> fieldMessage = new HashMap<>();
 
@@ -45,6 +45,10 @@ public class MovieFormValidator {
             }
         }
 
+        if (movieForm.getActors() == null || movieForm.getActors().isEmpty()) {
+            fieldMessage.put("actors", ValidationError.UNDEFINED_FIELD);
+        }
+
         return fieldMessage;
     }
 
@@ -53,7 +57,7 @@ public class MovieFormValidator {
      *
      * @Params MovieForm
      * @Return Map<String, ValidationError>
-     * */
+     */
     public static Map<String, ValidationError> validateMovieFormUpdate(MovieForm movieForm) {
         Map<String, ValidationError> fieldMessage = new HashMap<>();
 
@@ -75,6 +79,10 @@ public class MovieFormValidator {
 
         if (movieForm.getTrailerPath() != null) {
             fieldMessage.put("trailerPath", ValidationError.UNSSUPORTED_FIELD);
+        }
+
+        if (movieForm.getActors() != null) {
+            fieldMessage.put("actors", ValidationError.UNSSUPORTED_FIELD);
         }
 
         return fieldMessage;

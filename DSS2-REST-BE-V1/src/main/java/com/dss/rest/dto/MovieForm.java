@@ -22,6 +22,8 @@ public class MovieForm {
 
     private String trailerPath;
 
+    private Set<ActorForm> actors;
+
     public String getId() {
         return id;
     }
@@ -84,5 +86,13 @@ public class MovieForm {
 
     public void setMaturityRating(String maturityRating) {
         this.maturityRating = maturityRating;
+    }
+
+    public Set<ActorForm> getActors() {
+        return actors;
+    }
+
+    public void setActors(Set<ActorForm> actors) {
+        this.actors = actors;
     }
 }
