@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * */
 public class ActorForm {
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String id;
 
     private String firstName;

@@ -40,6 +40,13 @@ public class Actor {
             , inverseJoinColumns = @JoinColumn(name = "mvid"))
     private Set<Movie> movies;
 
+    public Actor() {
+    }
+
+    public Actor(UUID id) {
+        this.id = id;
+    }
+
     public UUID getId() {
         return id;
     }
