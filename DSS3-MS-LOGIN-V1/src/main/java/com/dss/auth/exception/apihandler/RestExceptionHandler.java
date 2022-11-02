@@ -2,6 +2,7 @@ package com.dss.auth.exception.apihandler;
 
 import com.dss.auth.dto.util.validator.ValidationError;
 import com.dss.auth.exception.FieldValidationException;
+import com.dss.auth.exception.UserNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,4 +36,23 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 , request);
     }
 
+
+    /**
+     * Global Exception handler for all not found exception
+     *
+     * @Params Exception, ServletWebRequest
+     * @Return ResponseEntity</ ?>
+     * <p>
+     * Http Status = NOT_FOUND
+     */
+    @ExceptionHandler(value = {UserNotFoundException.class})
+    public ResponseEntity<?> handleNotFoundException(Exception ex, ServletWebRequest request) {
+        return handleExceptionInternal(ex
+                , new ApiErrorBody<>(request.getRequest().getRequestURI()
+                        , HttpStatus.NOT_FOUND.toString()
+                        , ex.getMessage())
+                , new HttpHeaders()
+                , HttpStatus.NOT_FOUND
+                , request);
+    }
 }
