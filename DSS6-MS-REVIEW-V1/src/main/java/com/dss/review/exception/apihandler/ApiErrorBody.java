@@ -1,0 +1,43 @@
+package com.dss.review.exception.apihandler;
+
+
+/**
+ * Api Error Message class that accepts Generic<B>
+ *     to create the fail message body
+ * */
+public class ApiErrorBody<B> {
+
+    private String path;
+    private String httpCode;
+    private B body;
+
+    public ApiErrorBody(String path, String httpCode, B body) {
+        this.path = path;
+        this.httpCode = httpCode;
+        this.body = body;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getHttpCode() {
+        return httpCode;
+    }
+
+    public void setHttpCode(String httpCode) {
+        this.httpCode = httpCode;
+    }
+
+    public B getBody() {
+        return body;
+    }
+
+    public void setBody(B body) {
+        this.body = body;
+    }
+}
