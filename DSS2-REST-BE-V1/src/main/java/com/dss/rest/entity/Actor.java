@@ -28,11 +28,6 @@ public class Actor {
     @Column(name = "age")
     private short age;
 
-    @ElementCollection(targetClass = String.class)
-    @CollectionTable(schema = "actors", name = "actor_movie", joinColumns = @JoinColumn(name = "acid"))
-    @Column(name = "character_name")
-    private Set<String> characters;
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(schema = "actors"
             , name = "actor_movie"
@@ -85,14 +80,6 @@ public class Actor {
 
     public void setAge(short age) {
         this.age = age;
-    }
-
-    public Set<String> getCharacters() {
-        return characters;
-    }
-
-    public void setCharacters(Set<String> characters) {
-        this.characters = characters;
     }
 
     public Set<Movie> getMovies() {
