@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -168,7 +170,8 @@ public class MovieService {
             Optional<Movie> optMovie = movieRepository.findById(UUID.fromString(mvid));
             if (optMovie.isPresent()) {
                 Movie movie = optMovie.get();
-                if ((Duration.between(movie.getReleaseDate(), LocalDate.now()).getSeconds() / 31536000) >= 1) {
+                if ((Duration.between(LocalDateTime.of(movie.getReleaseDate(), LocalTime.MIN)
+                        , LocalDateTime.now()).toDays() / 365) >= 1) {
                     successDelete = true;
                     movieRepository.delete(movie);
                 } else {
