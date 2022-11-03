@@ -58,6 +58,8 @@ public class Movie {
             , inverseJoinColumns = @JoinColumn(name = "acid"))
     private Set<Actor> actors;
 
+    @OneToMany(mappedBy = "reviewedMovie", cascade = CascadeType.ALL)
+    private Set<Review> reviews;
     public Movie() {
     }
 
