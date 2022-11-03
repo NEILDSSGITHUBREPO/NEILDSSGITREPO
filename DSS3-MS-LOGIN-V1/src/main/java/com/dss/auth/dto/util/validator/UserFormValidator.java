@@ -24,7 +24,7 @@ public class UserFormValidator {
         if (userForm.getName() != null) {
             Pattern specialCharPattern = Pattern.compile("[^a-zA-Z ]");
             Matcher firstNameMatcher = specialCharPattern.matcher(userForm.getName());
-            if (firstNameMatcher.find()) fieldMessage.put("firstName", ValidationError.SPECIAL_CHARACTER);
+            if (firstNameMatcher.find()) fieldMessage.put("name", ValidationError.SPECIAL_CHARACTER);
         } else {
             fieldMessage.put("name", ValidationError.UNDEFINED_FIELD);
         }
