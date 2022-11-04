@@ -26,7 +26,7 @@
   * * Port: 8761
 
 #### Other project files
-database sqls: DSS1-UI-V1\artifact
+database sqls: ./artifact
 
 #### ERD
-![](DSS1-UI-V1/artifact/db_erd.png)
+![](./artifact/db_erd.png)
