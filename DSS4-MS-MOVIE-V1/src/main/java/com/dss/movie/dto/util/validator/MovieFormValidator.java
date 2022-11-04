@@ -22,11 +22,11 @@ public class MovieFormValidator {
     public static Map<String, ValidationError> validateMovieForm(MovieForm movieForm) {
         Map<String, ValidationError> fieldMessage = new HashMap<>();
 
-        if (movieForm.getTitle().isEmpty() || movieForm.getTitle() == null) {
+        if (movieForm.getTitle() == null || movieForm.getTitle().isEmpty()) {
             fieldMessage.put("title", ValidationError.UNDEFINED_FIELD);
         }
 
-        if (movieForm.getCoverPath().isEmpty() || movieForm.getCoverPath() == null) {
+        if (movieForm.getCoverPath() == null || movieForm.getCoverPath().isEmpty()) {
             fieldMessage.put("coverPath", ValidationError.UNDEFINED_FIELD);
         }
 
