@@ -1,4 +1,4 @@
-package com.dss.movie.dto;
+package com.dss.client.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * */
 public class UserForm {
     private String email;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+
     private String password;
     private String phoneNumber;
 
