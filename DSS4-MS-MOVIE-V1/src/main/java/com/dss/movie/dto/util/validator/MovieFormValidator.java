@@ -13,6 +13,7 @@ import java.util.Map;
  */
 public class MovieFormValidator {
 
+    private MovieFormValidator(){}
     /**
      * Validates the MovieForm for creating new Movie
      *

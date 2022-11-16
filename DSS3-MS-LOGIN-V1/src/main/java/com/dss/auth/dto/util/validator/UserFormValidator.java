@@ -12,6 +12,8 @@ import java.util.regex.Pattern;
  * */
 public class UserFormValidator {
 
+    private UserFormValidator(){}
+
     /**
      * Validates the UserForm for registration process
      *
@@ -29,14 +31,14 @@ public class UserFormValidator {
             fieldMessage.put("name", ValidationError.UNDEFINED_FIELD);
         }
 
-        if (userForm.getEmail() != null) {
-            if (emailExist) fieldMessage.put("email", ValidationError.DUPLICATE_DATA);
+        if (userForm.getEmail() != null || emailExist) {
+            fieldMessage.put("email", ValidationError.DUPLICATE_DATA);
         } else {
             fieldMessage.put("email", ValidationError.UNDEFINED_FIELD);
         }
 
-        if (userForm.getPhoneNumber() != null) {
-            if (phoneNumberExist) fieldMessage.put("phoneNumber", ValidationError.DUPLICATE_DATA);
+        if (userForm.getPhoneNumber() != null || phoneNumberExist) {
+            fieldMessage.put("phoneNumber", ValidationError.DUPLICATE_DATA);
         } else {
             fieldMessage.put("phoneNumber", ValidationError.UNDEFINED_FIELD);
         }

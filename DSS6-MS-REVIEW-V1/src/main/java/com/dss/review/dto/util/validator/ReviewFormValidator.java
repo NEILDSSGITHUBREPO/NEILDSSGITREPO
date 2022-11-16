@@ -11,6 +11,7 @@ import java.util.Map;
  */
 public class ReviewFormValidator {
 
+    private ReviewFormValidator(){}
     /**
      * Validates the ReviewForm for creating new Review
      *

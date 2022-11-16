@@ -46,8 +46,7 @@ public class ActorServiceTest {
         Mockito.when(actorRepository.save(any(Actor.class)))
                 .thenReturn(new Actor(UUID.fromString(acid)));
 
-        Assert.assertEquals(actorService.addActor(actorForm)
-                , acid);
+        Assert.assertEquals(acid, actorService.addActor(actorForm));
     }
 
     @Test
@@ -108,10 +107,10 @@ public class ActorServiceTest {
 
         PageResult result = actorService.getAllActor(1, 10, null, null);
 
-        Assert.assertEquals(result.getPage(), 1);
-        Assert.assertEquals(result.getSize(), 0);
-        Assert.assertEquals(result.getTotalPage(), 1);
-        Assert.assertEquals(result.getContent().size(), 0);
+        Assert.assertEquals(1, result.getPage());
+        Assert.assertEquals(0, result.getSize());
+        Assert.assertEquals(1, result.getTotalPage());
+        Assert.assertEquals(0, result.getContent().size());
     }
 
     @Test
@@ -130,10 +129,10 @@ public class ActorServiceTest {
 
         PageResult result = actorService.getAllActorOfMovie(mvid, 1, 10, null, null);
 
-        Assert.assertEquals(result.getPage(), 1);
-        Assert.assertEquals(result.getSize(), 0);
-        Assert.assertEquals(result.getTotalPage(), 1);
-        Assert.assertEquals(result.getContent().size(), 0);
+        Assert.assertEquals(1,result.getPage());
+        Assert.assertEquals(0, result.getSize());
+        Assert.assertEquals(1, result.getTotalPage());
+        Assert.assertEquals(0, result.getContent().size());
     }
 
     @Test

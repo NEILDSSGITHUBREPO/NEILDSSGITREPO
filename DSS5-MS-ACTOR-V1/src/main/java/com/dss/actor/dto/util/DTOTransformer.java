@@ -3,17 +3,15 @@ package com.dss.actor.dto.util;
 import com.dss.actor.dto.ActorForm;
 import com.dss.actor.entity.Actor;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 /*
  * Utility class to transform a DTO to Entity
  * */
 public class DTOTransformer {
+
+    private DTOTransformer() {
+    }
 
     /**
      * Transforms ActorForm to Actor
@@ -24,9 +22,9 @@ public class DTOTransformer {
     public static Actor transformToActor(ActorForm actorForm) {
         Actor actor = new Actor();
 
-        if(actorForm.getId() != null) {
+        if (actorForm.getId() != null) {
             actor.setId(UUID.fromString(actorForm.getId()));
-        }else {
+        } else {
             actor.setFirstName(actorForm.getFirstName());
             actor.setLastName(actorForm.getLastName());
             actor.setGender(actorForm.getGender());

@@ -27,7 +27,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
      * Http Status = BAD_REQUEST
      */
     @ExceptionHandler(value = {FieldValidationException.class})
-    public ResponseEntity<?> handleFieldValidationException(FieldValidationException fex, ServletWebRequest request) {
+    public ResponseEntity<Object> handleFieldValidationException(FieldValidationException fex, ServletWebRequest request) {
 
         return handleExceptionInternal(fex
                 , new ApiErrorBody<Map<String, ValidationError>>(request.getRequest().getRequestURI()
@@ -47,7 +47,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
      * Http Status = NOT_FOUND
      */
     @ExceptionHandler(value = {MovieNotFoundException.class, ActorNotFoundException.class})
-    public ResponseEntity<?> handleNotFoundException(Exception ex, ServletWebRequest request) {
+    public ResponseEntity<Object> handleNotFoundException(Exception ex, ServletWebRequest request) {
         return handleExceptionInternal(ex
                 , new ApiErrorBody<>(request.getRequest().getRequestURI()
                         , HttpStatus.NOT_FOUND.toString()
@@ -66,7 +66,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
      * Http Status = FAILED_DEPENDENCY
      */
     @ExceptionHandler(value = {DataEntanglementException.class})
-    public ResponseEntity<?> handleDataDependencyException(Exception ex, ServletWebRequest request) {
+    public ResponseEntity<Object> handleDataDependencyException(Exception ex, ServletWebRequest request) {
         return handleExceptionInternal(ex
                 , new ApiErrorBody<>(request.getRequest().getRequestURI()
                         , HttpStatus.FAILED_DEPENDENCY.toString()

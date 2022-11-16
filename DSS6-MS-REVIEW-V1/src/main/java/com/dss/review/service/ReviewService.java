@@ -49,20 +49,7 @@ public class ReviewService {
         } else {
             try {
                 Optional<Movie> optMovie = movieRepository.findById(UUID.fromString(mvid));
-                if (optMovie.isPresent()) {
-                    try {
-                        Review review = DTOTransformer.transformToReview(reviewForm);
-                        review.setAddedBy(new User(UUID.fromString(uid)));
-                        review.setReviewedMovie(optMovie.get());
-                        review.setDatePosted(LocalDate.now());
-                        reviewRepository.save(review);
-                    } catch (IllegalArgumentException iae) {
-                        fieldMessage.put("uid", ValidationError.FORMAT_MISMATCH);
-                        throw new FieldValidationException(fieldMessage);
-                    }
-                } else {
-                    throw new MovieNotFoundException();
-                }
+                    saveReview(reviewForm, uid, fieldMessage, optMovie);
             } catch (IllegalArgumentException iae) {
                 fieldMessage.put("mvid", ValidationError.FORMAT_MISMATCH);
                 throw new FieldValidationException(fieldMessage);
@@ -70,6 +57,23 @@ public class ReviewService {
         }
 
         return true;
+    }
+
+    private void saveReview(ReviewForm reviewForm, String uid, Map<String, ValidationError> fieldMessage, Optional<Movie> optMovie) {
+        try {
+            if(optMovie.isPresent()) {
+                Review review = DTOTransformer.transformToReview(reviewForm);
+                review.setAddedBy(new User(UUID.fromString(uid)));
+                review.setReviewedMovie(optMovie.get());
+                review.setDatePosted(LocalDate.now());
+                reviewRepository.save(review);
+            }else{
+                throw new MovieNotFoundException();
+            }
+        } catch (IllegalArgumentException iae) {
+            fieldMessage.put("uid", ValidationError.FORMAT_MISMATCH);
+            throw new FieldValidationException(fieldMessage);
+        }
     }
 
     /**
@@ -85,17 +89,7 @@ public class ReviewService {
         try {
             Optional<Movie> movie = movieRepository.findById(UUID.fromString(mvid));
             if (movie.isPresent()) {
-                try {
-                    Optional<Review> optReview = reviewRepository.findById(UUID.fromString(rid));
-                    if (optReview.isPresent()) {
-                        reviewForm = DTOTransformer.transformToReviewForm(optReview.get());
-                    } else {
-                        throw new MovieNotFoundException();
-                    }
-                } catch (IllegalArgumentException iae) {
-                    fieldMessage.put("rid", ValidationError.FORMAT_MISMATCH);
-                    throw new FieldValidationException(fieldMessage);
-                }
+                reviewForm = getReviewForm(rid, fieldMessage);
             } else {
                 throw new MovieNotFoundException();
             }
@@ -107,9 +101,25 @@ public class ReviewService {
         return reviewForm;
     }
 
+    private ReviewForm getReviewForm(String rid, Map<String, ValidationError> fieldMessage) {
+        ReviewForm reviewForm;
+        try {
+            Optional<Review> optReview = reviewRepository.findById(UUID.fromString(rid));
+            if (optReview.isPresent()) {
+                reviewForm = DTOTransformer.transformToReviewForm(optReview.get());
+            } else {
+                throw new MovieNotFoundException();
+            }
+        } catch (IllegalArgumentException iae) {
+            fieldMessage.put("rid", ValidationError.FORMAT_MISMATCH);
+            throw new FieldValidationException(fieldMessage);
+        }
+        return reviewForm;
+    }
+
     public PageResult<Set<ReviewForm>> viewMovieReviews(String mvid, int page, int size
             , String sortField, String sortDirection) {
-        Page reviewPage = null;
+        Page<Review> reviewPage = null;
 
         Map<String, ValidationError> fieldMessage = new HashMap<>();
         if (sortDirection == null || sortDirection.isEmpty()) sortDirection = "ASC";

@@ -8,6 +8,7 @@ import com.dss.review.entity.Review;
  * */
 public class DTOTransformer {
 
+    private DTOTransformer(){}
     /**
      * Transforms ReviewForm to Review
      *

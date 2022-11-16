@@ -17,7 +17,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
@@ -92,7 +91,7 @@ public class MovieService {
      * @Returns PageResult<Set < MovieForm>>
      */
     public PageResult<Set<MovieForm>> getAllMovies(int page, int size, String sortField, String sortDirection) {
-        Page moviePage = null;
+        Page<Movie> moviePage = null;
 
         Map<String, ValidationError> fieldMessage = new HashMap<>();
         if (sortDirection == null || sortDirection.isEmpty()) sortDirection = "ASC";

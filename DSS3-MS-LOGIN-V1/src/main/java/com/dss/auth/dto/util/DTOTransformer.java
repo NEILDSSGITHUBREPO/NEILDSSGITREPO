@@ -9,6 +9,7 @@ import com.dss.auth.entity.UserInformation;
  * */
 public class DTOTransformer {
 
+    private DTOTransformer(){}
     /*
      * Transforms UserForm to User Entity
      *

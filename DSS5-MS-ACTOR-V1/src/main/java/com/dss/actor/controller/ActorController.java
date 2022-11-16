@@ -59,16 +59,17 @@ public class ActorController {
 
     /**
      * controller method to update a specific actor
+     *
      * @Param String
      * @Return boolean; true if success
-     * */
+     */
     @PutMapping("update/{acid}")
     public boolean updateActor(@PathVariable(name = "acid") String acid, @RequestBody ActorForm actorForm) {
         return actorService.updateActor(acid, actorForm);
     }
 
     @DeleteMapping("delete")
-    public boolean deleteActor(@RequestParam("acid") String acid){
+    public boolean deleteActor(@RequestParam("acid") String acid) {
         return actorService.deleteActor(acid);
     }
 }

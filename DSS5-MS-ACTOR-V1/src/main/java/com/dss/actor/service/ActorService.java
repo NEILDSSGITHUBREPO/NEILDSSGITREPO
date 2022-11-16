@@ -79,7 +79,7 @@ public class ActorService {
      * @Returns PageResult<Set < ActorForm>>
      */
     public PageResult<Set<ActorForm>> getAllActor(int page, int size, String sortField, String sortDirection) {
-        Page actorPage = null;
+        Page<Actor> actorPage = null;
 
         Map<String, ValidationError> fieldMessage = new HashMap<>();
         if (sortDirection == null || sortDirection.isEmpty()) sortDirection = "ASC";
@@ -110,7 +110,7 @@ public class ActorService {
 
     public PageResult<Set<ActorForm>> getAllActorOfMovie(String mvid, int page, int size
             , String sortField, String sortDirection) {
-        Page actorPage = null;
+        Page<Actor> actorPage = null;
 
         Map<String, ValidationError> fieldMessage = new HashMap<>();
         if (sortDirection == null || sortDirection.isEmpty()) sortDirection = "ASC";
@@ -147,7 +147,7 @@ public class ActorService {
             Optional<Actor> optActor = actorRepository.findById(UUID.fromString(acid));
             if (optActor.isPresent()) {
                 Actor actor = optActor.get();
-                if (actor.getMovies().size() <= 0) {
+                if (actor.getMovies().isEmpty()) {
                     actorRepository.delete(actor);
                     successDelete = true;
                 } else {

@@ -13,7 +13,7 @@ import java.util.Map;
 public class FieldValidationException extends RuntimeException{
 
     private static final String MESSAGE = "Field Validation Exception";
-    private Map<String, ValidationError> fieldMessage;
+    private final Map<String, ValidationError> fieldMessage;
     public FieldValidationException(Map<String, ValidationError> fieldMessage){
         super(MESSAGE);
         this.fieldMessage = fieldMessage;
@@ -24,7 +24,4 @@ public class FieldValidationException extends RuntimeException{
         return fieldMessage;
     }
 
-    public void setFieldMessage(Map<String, ValidationError> fieldMessage) {
-        this.fieldMessage = fieldMessage;
-    }
 }
