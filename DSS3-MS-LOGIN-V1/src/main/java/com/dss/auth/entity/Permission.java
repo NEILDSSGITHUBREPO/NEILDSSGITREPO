@@ -15,13 +15,13 @@ public class Permission {
     private String name;
 
     @OneToMany
-    @JoinTable(name = "permission_resource", schema = "authorizations"
+    @JoinTable(name = "permission_resources", schema = "authorizations"
             ,joinColumns = @JoinColumn(name = "permission_id")
             ,inverseJoinColumns = @JoinColumn(name = "resource_id"))
     List<Resource> resources;
 
     @OneToMany
-    @JoinTable(name = "permission_action", schema = "authorizations"
+    @JoinTable(name = "permission_actions", schema = "authorizations"
             ,joinColumns = @JoinColumn(name = "permission_id")
             ,inverseJoinColumns = @JoinColumn(name = "action_id"))
     List<Action> actions;

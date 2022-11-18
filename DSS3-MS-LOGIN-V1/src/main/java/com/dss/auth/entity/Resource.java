@@ -13,6 +13,8 @@ public class Resource {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "path")
+    private String path;
     public long getId() {
         return id;
     }
@@ -27,5 +29,13 @@ public class Resource {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }
