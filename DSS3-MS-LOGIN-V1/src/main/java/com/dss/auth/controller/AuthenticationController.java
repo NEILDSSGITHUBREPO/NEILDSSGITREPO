@@ -1,5 +1,6 @@
 package com.dss.auth.controller;
 
+import com.dss.auth.dto.TokenForm;
 import com.dss.auth.dto.UserForm;
 import com.dss.auth.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class AuthenticationController {
      * catches errors through RestExceptionHandler
      */
     @PostMapping("/login")
-    public boolean loginUser(@RequestBody UserForm userForm) {
+    public TokenForm loginUser(@RequestBody UserForm userForm) {
         return authenticationService.loginUser(userForm);
     }
 }
