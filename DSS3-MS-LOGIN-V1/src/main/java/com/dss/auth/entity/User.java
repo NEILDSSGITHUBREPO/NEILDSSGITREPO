@@ -27,7 +27,13 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "uif", referencedColumnName = "id")
-    UserInformation userInformation;
+    private UserInformation userInformation;
+
+    @OneToOne
+    @JoinTable(name = "user_role", schema = "authorizations"
+            , joinColumns = @JoinColumn(name = "user_id")
+            , inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Role role;
 
     public User() {
     }
@@ -76,5 +82,13 @@ public class User {
 
     public void setUserInformation(UserInformation userInformation) {
         this.userInformation = userInformation;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

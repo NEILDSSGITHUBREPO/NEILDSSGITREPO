@@ -1,6 +1,7 @@
 package com.dss.auth.dto.util;
 
 import com.dss.auth.dto.UserForm;
+import com.dss.auth.entity.Role;
 import com.dss.auth.entity.User;
 import com.dss.auth.entity.UserInformation;
 
@@ -20,6 +21,7 @@ public class DTOTransformer {
         UserInformation userInformation = new UserInformation(userForm.getPhoneNumber(), userForm.getName());
 
         User user = new User(userForm.getEmail(), userForm.getPassword());
+        user.setRole(new Role(userForm.getRole()));
         user.setUserInformation(userInformation);
         return user;
     }

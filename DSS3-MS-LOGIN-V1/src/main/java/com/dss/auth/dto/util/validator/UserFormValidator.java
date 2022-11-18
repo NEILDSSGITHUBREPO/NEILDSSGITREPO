@@ -9,17 +9,18 @@ import java.util.regex.Pattern;
 
 /**
  * UserForm validator utility class
- * */
+ */
 public class UserFormValidator {
 
-    private UserFormValidator(){}
+    private UserFormValidator() {
+    }
 
     /**
      * Validates the UserForm for registration process
      *
      * @Params UserForm, boolean, boolean
      * @Return Map<String, ValidationError>
-     * */
+     */
     public static Map<String, ValidationError> validateRegistrationForm(UserForm userForm, boolean emailExist, boolean phoneNumberExist) {
         Map<String, ValidationError> fieldMessage = new HashMap<>();
 
@@ -31,14 +32,14 @@ public class UserFormValidator {
             fieldMessage.put("name", ValidationError.UNDEFINED_FIELD);
         }
 
-        if (userForm.getEmail() != null || emailExist) {
-            fieldMessage.put("email", ValidationError.DUPLICATE_DATA);
+        if (userForm.getEmail() != null) {
+            if (emailExist) fieldMessage.put("email", ValidationError.DUPLICATE_DATA);
         } else {
             fieldMessage.put("email", ValidationError.UNDEFINED_FIELD);
         }
 
-        if (userForm.getPhoneNumber() != null || phoneNumberExist) {
-            fieldMessage.put("phoneNumber", ValidationError.DUPLICATE_DATA);
+        if (userForm.getPhoneNumber() != null) {
+            if (phoneNumberExist) fieldMessage.put("phoneNumber", ValidationError.DUPLICATE_DATA);
         } else {
             fieldMessage.put("phoneNumber", ValidationError.UNDEFINED_FIELD);
         }
@@ -63,7 +64,7 @@ public class UserFormValidator {
      *
      * @Params UserForm
      * @Return Map<String, ValidationError>
-     * */
+     */
     public static Map<String, ValidationError> validateLoginForm(UserForm userForm) {
         Map<String, ValidationError> fieldMessage = new HashMap<>();
 

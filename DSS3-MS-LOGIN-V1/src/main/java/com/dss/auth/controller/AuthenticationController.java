@@ -3,10 +3,7 @@ package com.dss.auth.controller;
 import com.dss.auth.dto.UserForm;
 import com.dss.auth.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Controller for handling authentication. Login and Registration

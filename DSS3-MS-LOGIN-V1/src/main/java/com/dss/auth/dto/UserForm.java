@@ -15,6 +15,7 @@ public class UserForm {
 
     private String name;
 
+    private int role;
     public UserForm(String email, String password, String phoneNumber, String name) {
         this.email = email;
         this.password = password;
@@ -52,5 +53,13 @@ public class UserForm {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 }
