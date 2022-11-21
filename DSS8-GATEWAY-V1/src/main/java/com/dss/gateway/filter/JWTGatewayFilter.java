@@ -1,7 +1,5 @@
 package com.dss.gateway.filter;
 
-import com.auth0.jwt.interfaces.Claim;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.dss.gateway.client.RoleClient;
 import com.dss.gateway.entity.Action;
 import com.dss.gateway.entity.Permission;
@@ -17,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -43,14 +40,12 @@ public class JWTGatewayFilter implements GlobalFilter {
         String requestedResource = request.getPath().toString();
         requestedResource = requestedResource.substring(0, requestedResource.lastIndexOf('/'));
 
-        String requestedMethod = request.getMethod().toString();
+        String requestedMethod = Objects.requireNonNull(request.getMethod()).toString();
 
         //check if request is not on the open routes
         if (routerValidator.isSecured.test(request)) {
             if (!request.getHeaders().containsKey("Authorization")) {
-                response.setStatusCode(HttpStatus.BAD_REQUEST);
-                extracted(exchange, response, "Malformed Header");
-                return response.setComplete();
+                return setResponse(response, "Malformed Header", HttpStatus.BAD_REQUEST);
             }
             //validate token
             String bearer = request.getHeaders().getOrEmpty("Authorization").get(0);
@@ -75,25 +70,23 @@ public class JWTGatewayFilter implements GlobalFilter {
 
 
                 if (!allowableResource.contains(requestedResource) || !allowableAction.contains(requestedMethod)) {
-                    response.setStatusCode(HttpStatus.UNAUTHORIZED);
-                    extracted(exchange, response, "Unsatisfied Privillege");
-                    return response.setComplete();
+                    return setResponse(response, "Unsatisfied Privillege", HttpStatus.UNAUTHORIZED);
                 }
 
             } else {
-                response.setStatusCode(HttpStatus.BAD_REQUEST);
-                extracted(exchange, response, "Malformed Header");
-                return response.setComplete();
+                return setResponse(response, "Malformed Header", HttpStatus.BAD_REQUEST);
             }
         }
 
         return chain.filter(exchange);
     }
 
-    private static void extracted(ServerWebExchange exchange, ServerHttpResponse response, String message) {
-        DataBuffer buffer = exchange.getResponse()
+    private static Mono<Void> setResponse(ServerHttpResponse response, String message, HttpStatus httpStatus) {
+        response.setStatusCode(httpStatus);
+        DataBuffer buffer = response
                 .bufferFactory()
                 .wrap(message.getBytes(StandardCharsets.UTF_8));
-        response.writeWith(Mono.just(buffer));
+
+        return response.writeWith(Mono.just(buffer));
     }
 }
